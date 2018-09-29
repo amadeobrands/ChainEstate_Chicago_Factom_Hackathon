@@ -22,6 +22,6 @@ On top of all this we integrated an identity chain that will verify all data fro
 
 <a href="https://github.com/amadeobrands/ChainEstate/blob/master/art-work/Chain_Estate_v1.pdf" target="_blank"><h4>Check out some nice art-work :)</h4></a>
 
-<a href="http://chainestate.maxlava.com/" target="_blank"><h3>Check out our website for more information</h3></a>
+<a href="http://chainestate.tech/" target="_blank"><h3>Check out our website for more information</h3></a>
 
 
