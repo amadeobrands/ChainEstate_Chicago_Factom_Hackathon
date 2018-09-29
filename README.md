@@ -1,9 +1,9 @@
-<h1>Wanxiang Blockchain Hackathon 2018</h1>
+<h1>Factom Blockchain Hackathon: Smart Contract</h1>
 
 <img src="https://raw.githubusercontent.com/amadeobrands/ChainEstate/master/art-work/chain-estate.png">
 
 <Strong>Project Name:</strong>
-Chain Estate
+ChainEstate
 
 <Strong>Team nr:</strong>
 17
