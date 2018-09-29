@@ -282,6 +282,11 @@
                                                     About the building
                                                 </a>
                                             </li>
+                                             <li class="nav-item">
+                                                <a href="#settings" data-toggle="tab" aria-expanded="true" class="nav-link">
+                                                    leaser overview
+                                                </a>
+                                            </li>
                                             <li class="nav-item">
                                                 <a href="#profile" data-toggle="tab" aria-expanded="true" class="nav-link">
                                                     Digital Assets Overview
@@ -295,6 +300,38 @@
                                                 <p class="m-b-5">Office Building Moganshan Road Chinese Building Development – design by David Chipperfield Architectspage updated 22 Oct 2016 with new images ; 24 Nov 2014  Office Building Moganshan Road in Hangzho Location: Hangzhou, China Design: David Chipperfield Architects The ten-storey office building is located in a diversely built area on Moganshan Road near Hangzhou’s tranquil Shuyhan Park.</p>
                                             </div>
 
+                                            <div class="tab-pane" id="settings">
+                                                <form role="form">
+                                                    <div class="form-group">
+                                                        <label for="FullName">Full Name</label>
+                                                        <input type="text" value="John Doe" id="FullName" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="Email">Email</label>
+                                                        <input type="email" value="first.last@example.com" id="Email" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="Username">Username</label>
+                                                        <input type="text" value="john" id="Username" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="Password">Password</label>
+                                                        <input type="password" placeholder="6 - 15 Characters" id="Password" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="RePassword">Re-Password</label>
+                                                        <input type="password" placeholder="6 - 15 Characters" id="RePassword" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="AboutMe">About Me</label>
+                                                        <textarea style="height: 125px" id="AboutMe" class="form-control">Loren gypsum dolor sit mate, consecrate disciplining lit, tied diam nonunion nib modernism tincidunt it Loretta dolor manga Amalia erst volute. Ur wise denim ad minim venial, quid nostrum exercise ration perambulator suspicious cortisol nil it applique ex ea commodore consequent.</textarea>
+                                                    </div>
+                                                    <button class="btn btn-primary waves-effect waves-light w-md" type="submit">Save</button>
+                                                </form>
+                                            </div>
+
+
+
                                             <div class="tab-pane" id="profile">
 
                                                 <div class="row" v-for="(value,key) in asset_details">
@@ -304,6 +341,7 @@
                                                         {{"Floor " + value1.floor + " (" + value1.size + " sqm @ " + value1.price + "rmb per sqm)"}}<br/>
                                                         {{"Status: " + ((value1.status == 0) ? "Vacant" : (value1.status == 1) ? "Occupied" : "Sublet Available")}}
                                                         </div>
+
 
 
                                                         <!-- 
