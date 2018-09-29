@@ -2,11 +2,8 @@
 
 <img src="https://raw.githubusercontent.com/amadeobrands/ChainEstate/master/art-work/chain-estate.png">
 
-<Strong>Project Name:</strong>
+<Strong>Team Name:</strong>
 ChainEstate
-
-<Strong>Team nr:</strong>
-17
 
 <Strong>Tags:</strong>
 Real Estate
