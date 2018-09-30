@@ -306,9 +306,6 @@ window.ChainEstateApp = {
 
 ChainEstateApp.InitPage();
 
-import "./vue_magic";
-
-
 /*
 var acts_view = new Vue(
     {
