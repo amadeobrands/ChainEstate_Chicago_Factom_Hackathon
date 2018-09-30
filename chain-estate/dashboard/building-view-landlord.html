@@ -323,10 +323,10 @@
                                                         <!-- Center modal -->
                                                         <button type="button"
                                                                 class="btn btn-primary waves-effect waves-light"
-                                                                data-toggle="modal" data-target="#CenterModal">Rate
+                                                                data-toggle="modal" :data-target="'#CenterModal'+idx">Rate
                                                             leaser <i class="fa fa-star"></i></button>
                                                         <!-- sample modal content -->
-                                                        <div id="CenterModal" class="modal fade" tabindex="-1"
+                                                        <div :id="'CenterModal'+idx" class="modal fade" tabindex="-1"
                                                              role="dialog" aria-labelledby="CenterModalLabel"
                                                              aria-hidden="true">
                                                             <div class="modal-dialog modal-dialog-centered">
