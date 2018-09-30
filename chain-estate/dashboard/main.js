@@ -170,6 +170,17 @@ window.ChainEstateApp = {
     GetAllSpaces: function() {
         self = this;
 
+        // self.SaveSpaceInfo({name:"test"}).then(function(hash){
+        //     var url = "https://chainlease.azurewebsites.net/chicago/chains/21d11043cff1908e4c2fba0eb45edcefa9913f99d1a13819af665b0588129045/entries" +
+        //         hash;
+        //     console.log("Creating new space: " + url);
+        //     return self.spaceContract.at(self.spaceAddress).createSpace(11, url, 1800, 550, {from: self.account});
+        // }).then(function() {
+        //     console.log("Space Created");
+        // }).error(function(err){
+        //     console.error(err);
+        // });
+
         var buildingInst;
 
         console.log("Getting all spaces");
@@ -188,7 +199,11 @@ window.ChainEstateApp = {
 
             return Promise.all(p);
         }).then(function() {
+
+            return self.SaveSpaces(self.spaces);
+        }).then(function() {
             console.log(self.spaces);
+
             self.PopulateSpaces();
         }).catch(function(err) {
             console.error(err);
@@ -251,7 +266,42 @@ window.ChainEstateApp = {
         }).catch(function(err) {
             console.error(err);
         });
+    }, 
+
+    SaveSpaces: function(data) {
+        self = this;
+
+        console.log("Saving Spaces");
+        var p = data.map(function(d) {return self.SaveSpaceInfo(d)});
+
+        return Promise.all(p);
+    },
+
+    SaveSpaceInfo: function(info) {
+        return new Promise(function(resolve, reject) {
+            var info_b64 = btoa(JSON.stringify(info));
+            var id_b64 = btoa(info.id.toString());
+            var xhttp = new XMLHttpRequest();
+
+            xhttp.addEventListener("readystatechange", function () {
+                if (this.readyState === 4) {
+                    console.log(this.responseText);
+                    var obj = JSON.parse(this.responseText);
+                    info.factom = obj.entry_hash;
+                    resolve();
+                }
+            });
+            xhttp.addEventListener("error", function () {
+                reject();
+            });
+
+            xhttp.open("POST", "https://chainlease.azurewebsites.net/chicago/chains/d625a573aa5e50ba8a46a6fd0ca5db0a55d3a1a3cc325b836b3a7a546e277410/entries", true);
+            xhttp.setRequestHeader("Content-Type", "application/json");
+            xhttp.setRequestHeader("user-key", "fae3c3d1811106876b2b4bde9f5c24f6");
+            xhttp.send('{"external_ids":["U3BhY2VJbmZv","' + id_b64 + '"],"content":"' + info_b64 + '"}');
+        });
     }
+
 };
 
 ChainEstateApp.InitPage();
