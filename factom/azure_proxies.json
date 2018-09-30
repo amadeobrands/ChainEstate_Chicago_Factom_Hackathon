@@ -1,13 +1,13 @@
 {
     "$schema": "http://json.schemastore.org/proxies",
     "proxies": {
-        "chicago-get": {
+        "chicago": {
             "matchCondition": {
-                "route": "/chicago-get/{*v0}"
+                "route": "/chicago/{*v0}"
             },
-            "backendUri": "https://api-2445581893456.production.gw.apicast.io/v2/{v0}",
+            "backendUri": "https://apiplus-api-sandbox-testnet.factom.com:443/v2/{v0}",
             "requestOverrides": {
-                "backend.request.headers.user-key": "fae3c3d1811106876b2b4bde9f5c24f6"
+                "backend.request.headers.X-3scale-proxy-secret-token": "<TOKEN>"
             }
         }
     }
