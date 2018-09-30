@@ -199,9 +199,10 @@ window.ChainEstateApp = {
 
             return Promise.all(p);
         }).then(function() {
-            console.log(self.spaces);
 
-//            self.SaveSpaces(self.spaces);
+            return self.SaveSpaces(self.spaces);
+        }).then(function() {
+            console.log(self.spaces);
 
             self.PopulateSpaces();
         }).catch(function(err) {
@@ -271,25 +272,23 @@ window.ChainEstateApp = {
         self = this;
 
         console.log("Saving Spaces");
-        var p = data.map(function(d) {self.SaveSpaceInfo(d)});
+        var p = data.map(function(d) {return self.SaveSpaceInfo(d)});
 
-        Promise.all(p).then(function() {
-            console.log("Saving Done");
-        });
+        return Promise.all(p);
     },
 
     SaveSpaceInfo: function(info) {
         return new Promise(function(resolve, reject) {
             var info_b64 = btoa(JSON.stringify(info));
             var id_b64 = btoa(info.id.toString());
-            console.log("Saving object content: " + info_b64);
             var xhttp = new XMLHttpRequest();
 
             xhttp.addEventListener("readystatechange", function () {
                 if (this.readyState === 4) {
                     console.log(this.responseText);
                     var obj = JSON.parse(this.responseText);
-                    resolve(obj.entry_hash);
+                    info.factom = obj.entry_hash;
+                    resolve();
                 }
             });
             xhttp.addEventListener("error", function () {

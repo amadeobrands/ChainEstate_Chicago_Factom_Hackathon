@@ -239,20 +239,21 @@
                                         </div>
 
                                         <div class="">
-                                            <h5 class="m-b-5">Moganshan Road</h5>
-                                            <p class="text-muted">No.463, Office Building Moganshan Road, Shanghai, China</p>
+                                            <h5 class="m-b-5">One Illinois Center</h5>
+                                            <p class="text-muted">111 E Upper Wacker Dr, Chicago, IL 60601</p>
                                         </div>
 
                                         <div class="text-left m-t-40">
-                                            <p class="text-muted font-13"><strong>Contact name:</strong> <span class="m-l-15">Mark A. McKnight</span></p>
+                                            <p class="text-muted font-13"><strong>Contact name:</strong><br/> <span class="m-l-15">Mark A. McKnight</span></p>
 
-                                            <p class="text-muted font-13"><strong>Mobile :</strong><span class="m-l-15">+44 (0)7952 149814</span></p>
+                                            <p class="text-muted font-13"><strong>Mobile :</strong><br/><span class="m-l-15">+1 (312) 475-3475</span></p>
 
-                                            <p class="text-muted font-13"><strong>Email :</strong> <span class="m-l-15">bruno@moganshan.com</span></p>
+                                            <p class="text-muted font-13"><strong>Email :</strong><br/> <span class="m-l-15">mmcknight@oneillinois.com</span></p>
 
-                                            <p class="text-muted font-13"><strong>Location :</strong> <span class="m-l-15">China</span></p>
+                                            <p class="text-muted font-13"><strong>Location :</strong><br/> <span class="m-l-15">Chicago</span></p>
                                         </div>
                                         <div><a target="_blank" href="https://rinkeby.etherscan.io/token/0x3615f89082fb3877dcccfd7f6a906d846e78e3ca">View CEBT on EtherScan</a></div>
+                                        <div><a target="_blank" href="https://explorer-hackathon.factom.com/chains/d625a573aa5e50ba8a46a6fd0ca5db0a55d3a1a3cc325b836b3a7a546e277410">View Property on Factom Explorer</a></div>
 
                                         <ul class="social-links list-inline m-t-30">
                                             <li class="list-inline-item">
@@ -297,7 +298,9 @@
 
                                         <div class="tab-content">
                                             <div class="tab-pane active" id="home">
-                                                <p class="m-b-5">Office Building Moganshan Road Chinese Building Development – design by David Chipperfield Architectspage updated 22 Oct 2016 with new images ; 24 Nov 2014  Office Building Moganshan Road in Hangzho Location: Hangzhou, China Design: David Chipperfield Architects The ten-storey office building is located in a diversely built area on Moganshan Road near Hangzhou’s tranquil Shuyhan Park.</p>
+                                                <p class="m-b-5">
+                                                    Illinois Center is a mixed-use urban development in downtown Chicago, Illinois, USA, lying east of Michigan Avenue. It is notable in that the streets running through it have three levels. Elsewhere in Chicago, some streets have two levels, with the lower level for through traffic and service vehicles and the upper level for other local traffic. In Illinois Center, the lower level has been split, with a middle level for through traffic and a lower level for service vehicles.
+                                                </p>
                                             </div>
 
                                             <div class="tab-pane" id="settings">
@@ -508,6 +511,7 @@
                  <div class="row">Leased by: {{(value[index1]['status']!=1) ? "N/A" : (value[index1]['leasee'] == account_address) ? "Me" : value[index1]['leasee']}}</div>
                 <br/>
                 <div><a target="_blank" :href="'https://rinkeby.etherscan.io/token/'+space_address+'?a='+ value[index1]['id']">View CEST on EtherScan</a></div>
+                <div><a target="_blank" :href="'https://explorer-hackathon.factom.com/chains/d625a573aa5e50ba8a46a6fd0ca5db0a55d3a1a3cc325b836b3a7a546e277410/entries/'+value[index1]['factom']">View SpaceInfo on Factom Explorer</a></div>
           </div>
         </div>
       </div>
