@@ -20,9 +20,9 @@ var get_info_factom = axios.create({
 // The ID of the tennant chain
 var tennant_id = "21d11043cff1908e4c2fba0eb45edcefa9913f99d1a13819af665b0588129045";
 
-var push_rating_on_chain = axios.create({
+var api_push_rating_on_chain = axios.create({
   method: 'POST',
-  url: '/chains/' + tennant_id + '/entries',
+
   strictSSL: false,
 });
 
@@ -53,6 +53,15 @@ var api_get_all_landlords = axios.create({
   }
 });
 
+// Check, if the chain is deleted
+var api_chain_is_alive = axios.create({
+  method: 'POST',
+  //url: '/chains/' + tennant_id + '/entries/search'
+  data: {
+    //"external_ids": [Base64.encode("ChainEstate"),Base64.encode("ChainEstateTenant")]
+    "external_ids": [Base64.encode("Deleted")]
+  }
+});
 
 
 var get_entry_on_chain_by_hash = axios.create({
@@ -76,8 +85,8 @@ var ce = new Vue({
       "contract_stage": 123,
       "timestemp": 123,
       "review": {
-        "value": 123,
-        "comment": "good"
+        "value": 3,
+        "comment": "Be kind."
       }
     },
     tenants:[],
@@ -86,7 +95,10 @@ var ce = new Vue({
     images:[
         "assets/images/users/avatar-1.jpg",
         "assets/images/users/avatar-2.jpg",
-        "assets/images/users/avatar-3.jpg"
+        "assets/images/users/avatar-3.jpg",
+        "assets/images/users/avatar-4.jpg",
+        "assets/images/users/avatar-5.jpg",
+        "assets/images/users/avatar-6.jpg",
     ]
   },
   methods: {
@@ -119,37 +131,45 @@ var ce = new Vue({
 
     },
   	//Push the rating to the chain based on rating_data
-    push_rating() {
+    push_rating(tenant_id,landlord_id,contract_id,property_id) {
     	var rating_data = JSON.parse(JSON.stringify(ce.rating_data));
-      rating_data.review.value = ce.rating;
+    	rating_data.tenant_id = tenant_id;
+    	rating_data.landlord_id = landlord_id;
+    	rating_data.contract_id = contract_id;
+    	rating_data.property_id = property_id;
+    	rating_data.timestemp = new Date();
+      //rating_data.review.value = ce.rating;
       let payload = {
-        "external_ids": [Base64.encode('credential_type:rating')],
+        "external_ids": [Base64.encode('credential_type:rating:test')],
         "content": Base64.encode(JSON.stringify(rating_data)),
       };
-      push_rating_on_chain({
-        data: payload
+      api_push_rating_on_chain({
+        data: payload,
+        url: '/chains/' + tenant_id + '/entries',
       }).then(function(response) {
         let data = response.data;
-        console.log('Answer:', data);
+        console.log('Review pushed:', data);
         ce.api_response = data.entry_hash;
+        alert("Review created:"+" https://explorer-hackathon.factom.com/chains/"+tenant_id+"/entries/"+data.entry_hash);
       }).catch(error => {
         console.log("Error:", error);
       });
     },
     //Get the last rating
-    get_rating() {
+    get_rating(tenant_id) {
     	ce.rating_list = [];
       let payload = {
-        "external_ids": [Base64.encode('credential_type:rating')]
+        "external_ids": [Base64.encode('credential_type:rating:test')]
       };
       get_ratings_on_chain({
-        data: payload
+        data: payload,
+        url: '/chains/' + tenant_id + '/entries/search'
       }).then(function(response) {
         let data = response.data;
-        console.log('Answer:', data);
+        console.log('get_ratings_on_chain:', data);
         let ratings = data.data.reverse();
 				ratings.forEach(function(rating){
-        	let content = ce.get_by_hash(rating.entry_hash,"push",ce.api_response);
+        	ce.get_by_hash(rating.entry_hash,"push",ce.rating_list,tenant_id);
         });
 
       }).catch(error => {
@@ -157,8 +177,16 @@ var ce = new Vue({
       });
     },
     //Get the entry by hash and transform the content.
-    get_by_hash(entry_hesh, param, the_list) {
-      let url = '/chains/' + tennant_id + '/entries/' + entry_hesh;
+    get_by_hash(entry_hesh, param, the_list,extra_tenant_id) {
+      let chain_id = '';
+      if (typeof extra_tenant_id !== 'undefined') {
+          chain_id = extra_tenant_id;
+      }
+      else {
+        chain_id = tennant_id;
+      }
+
+      let url = '/chains/' + chain_id + '/entries/' + entry_hesh;
       get_entry_on_chain_by_hash({
         url: url
       }).then(function(response) {
@@ -166,7 +194,11 @@ var ce = new Vue({
         console.log('Answer:', data);
         // A dirty hack to show all related ratings.
         if (param === "push"){
-        	the_list.push(Base64.decode(data.data.content));
+          let content = JSON.parse(Base64.decode(data.data.content));
+          content.created_at = data.data.created_at;
+          content.chain_id = data.data.chain.chain_id;
+          console.log("content of entry:",content);
+        	the_list.push(content);
         }
         return Base64.decode(data.data.content);
       }).catch(error => {
@@ -176,22 +208,35 @@ var ce = new Vue({
         //Get the entry by hash and transform the content.
     get_by_chain(chain_hesh, param, the_list) {
       let url = '/chains/' + chain_hesh + "/entries/first" ;
-      get_entry_on_chain_by_hash({
-        url: url
+      //Check first if the chain is not deleted.
+      api_chain_is_alive({
+        url: '/chains/' + chain_hesh + '/entries/search'
       }).then(function(response) {
-        let data = response.data;
-        console.log('Answer:', data);
-        // A dirty hack to show all related ratings.
-        if (param === "push"){
-          let content = JSON.parse(Base64.decode(data.data.content));
-          content.chain_id = chain_hesh;
-        	the_list.push(content);
-        	console.log("the_list",the_list);
+        console.log("Is alive",response);
+        if (response.data.count>0){
+          return true
         }
-        return Base64.decode(data.data.content);
+        //If the chain is not deleted, get the data from it.
+        get_entry_on_chain_by_hash({
+          url: url
+        }).then(function(response) {
+          let data = response.data;
+          console.log('Answer:', data);
+          // A dirty hack to show all related ratings.
+          if (param === "push"){
+            let content = JSON.parse(Base64.decode(data.data.content));
+            content.chain_id = chain_hesh;
+            //Pushing values to the communicated list
+            the_list.push(content);
+            console.log("the_list",the_list);
+          }
+        }).catch(error => {
+          console.log("Error:", error);
+        });
       }).catch(error => {
         console.log("Error:", error);
       });
+
     }
   }
 
