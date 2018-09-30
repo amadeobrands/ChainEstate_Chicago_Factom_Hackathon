@@ -28,6 +28,7 @@ var api_push_rating_on_chain = axios.create({
 
 // Getting the ratings on the chain of this tennant
 var get_ratings_on_chain = axios.create({
+  data:{"external_ids": [Base64.encode('LandlordReview')]},
   method: 'POST',
   url: '/chains/' + tennant_id + '/entries/search'
 });
@@ -77,14 +78,12 @@ var ce = new Vue({
   data: {
   	api_response:[],
     rating:3,
-    test: new Date(Math.floor(Date.now() / 1000/60/60)*1000*60*60),
     rating_data: {
-      "property_id": 123,
+      "property_id": "d625a573aa5e50ba8a46a6fd0ca5db0a55d3a1a3cc325b836b3a7a546e277410",
       "landlord_id": 123,
-      "contract_id": 123,
       "contract_stage": 123,
       "timestemp": 123,
-      "review": {
+      "data": {
         "value": 3,
         "comment": "Be kind."
       }
@@ -93,12 +92,11 @@ var ce = new Vue({
     landlords:[],
     rating_list :[],
     images:[
-        "assets/images/users/avatar-1.jpg",
-        "assets/images/users/avatar-2.jpg",
-        "assets/images/users/avatar-3.jpg",
-        "assets/images/users/avatar-4.jpg",
-        "assets/images/users/avatar-5.jpg",
-        "assets/images/users/avatar-6.jpg",
+        "assets/images/users/avatar-12.jpg",
+        "assets/images/users/avatar-12.jpg",
+        "assets/images/users/avatar-12.jpg",
+        "assets/images/users/avatar-12.jpg",
+        "assets/images/users/avatar-12.jpg",
     ]
   },
   methods: {
@@ -131,13 +129,10 @@ var ce = new Vue({
 
     },
   	//Push the rating to the chain based on rating_data
-    push_rating(tenant_id,landlord_id,contract_id,property_id) {
+    push_rating(tenant_id,landlord_id,property_id) {
     	var rating_data = JSON.parse(JSON.stringify(ce.rating_data));
-    	rating_data.tenant_id = tenant_id;
     	rating_data.landlord_id = landlord_id;
-    	rating_data.contract_id = contract_id;
     	rating_data.property_id = property_id;
-    	rating_data.timestemp = new Date();
       //rating_data.review.value = ce.rating;
       let payload = {
         "external_ids": [Base64.encode('credential_type:rating:test')],
@@ -158,11 +153,8 @@ var ce = new Vue({
     //Get the last rating
     get_rating(tenant_id) {
     	ce.rating_list = [];
-      let payload = {
-        "external_ids": [Base64.encode('credential_type:rating:test')]
-      };
       get_ratings_on_chain({
-        data: payload,
+
         url: '/chains/' + tenant_id + '/entries/search'
       }).then(function(response) {
         let data = response.data;

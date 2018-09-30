@@ -345,7 +345,7 @@
 
 
                                                                             <v-rating
-                                                                                    v-model="rating_data.review.value"></v-rating>
+                                                                                    v-model="rating_data.data.value"></v-rating>
                                                                         </div>
                                                                         <div class="modal-body">
                                                                             <div class="row">
@@ -356,7 +356,7 @@
                                                                                         <textarea class="form-control"
                                                                                                   id="field-7"
                                                                                                   placeholder="Leave a comment"
-                                                                                                  v-model="rating_data.review.comment"></textarea>
+                                                                                                  v-model="rating_data.data.comment"></textarea>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -372,7 +372,7 @@
                                                                         <button type="button"
                                                                                 class="btn btn-primary waves-effect waves-light"
                                                                                 data-dismiss="modal"
-                                                                                @click="push_rating(tenants[idx].chain_id,'landlord_id','contract_id','property_id')">
+                                                                                @click="push_rating(tenants[idx].chain_id,'landlord_id','property_id')">
                                                                             Submit review
                                                                         </button>
                                                                     </div>
@@ -399,8 +399,8 @@
                                                                             ×
                                                                         </button>
                                                                         <h4 class="modal-title"
-                                                                            id="full-width-modalLabel">Credential
-                                                                            Entry</h4>
+                                                                            id="full-width-modalLabel">{{tenants[idx].Name}}'s Credentials
+                                                                        </h4>
                                                                     </div>
                                                                     <div class="modal-body">
                                                                         <div class="row">
@@ -414,10 +414,15 @@
                                                                                                 <div class="panel-body">
                                                                                                     <span class="arrow-alt"></span>
                                                                                                     <span class="timeline-icon"></span>
-                                                                                                    <v-rating
-                                                                                                            v-model="rating.review.value"></v-rating>
-                                                                                                    <p>
-                                                                                                        {{rating.review.comment}}</p>
+                                                                                                    <div v-if="rating.Type == 'Landlord Review'">
+                                                                                                        <v-rating
+                                                                                                                v-model="rating.Data.Rating"></v-rating>
+                                                                                                        <p>
+                                                                                                            {{rating.Data.Comment}}</p>
+                                                                                                    </div>
+                                                                                                    <div v-if="rating.Type != 'Landlord Review'">
+                                                                                                        
+                                                                                                    </div>
                                                                                                     <p class="timeline-date text-muted">
                                                                                                         <small>
                                                                                                             {{rating.created_at}}
