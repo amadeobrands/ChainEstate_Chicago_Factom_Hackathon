@@ -415,7 +415,7 @@
                                                                                                     <span class="arrow-alt"></span>
                                                                                                     <span class="timeline-icon"></span>
                                                                                                     <div class="row">
-                                                                                                        <a target="_blank" :href="'https://explorer-hackathon.factom.com/chains/'+tenants[idx].chain_id+'/entries/'+rating.hash_id"><h4>{{rating.Type}}</h4></a>
+                                                                                                        <a target="_blank" :href="'https://explorer-hackathon.factom.com/chains/'+rating.chain_id+'/entries/'+rating.hash_id"><h4>{{rating.Type}}</h4></a>
                                                                                                     </div>
                                                                                                     <div class="row" v-if="rating.Type == 'Landlord Review'">
 
@@ -524,7 +524,7 @@
                                                             <p class="text-muted font-13">
                                                                 <strong>PublicKey:</strong><span class="m-l-15"><a
                                                                     :href="'https://explorer-hackathon.factom.com/chains/'+tenants[idx].chain_id"
-                                                                    target="_blank">{{tenants[idx].PublicKey}}</a></span>
+                                                                    target="_blank">{{ tenants[idx].PublicKey.length>20 ? tenants[idx].PublicKey.substring(1, 20)+"..." : tenants[idx].PublicKey}}</a></span>
                                                             </p>
 
                                                             <p class="text-muted font-13"><strong>Address:</strong>
