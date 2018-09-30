@@ -72,7 +72,7 @@ var get_entry_on_chain_by_hash = axios.create({
 var entry_hash = ";";
 
 var PropertyID = "d625a573aa5e50ba8a46a6fd0ca5db0a55d3a1a3cc325b836b3a7a546e277410";
-
+var LandlordID = "d5d8d530100ac5d21efe50e62bcbf0bd11abde40a9518cc70a8891089284ce34";
 var ce = new Vue({
   el: '#ce',
   data: {
@@ -81,11 +81,10 @@ var ce = new Vue({
     rating_data: {
       "PropertyID": PropertyID,
       "LandlordID": 123,
-      "contract_stage": 123,
-      "timestemp": 123,
-      "data": {
-        "value": 3,
-        "comment": "Be kind."
+
+      "Data": {
+        "Rating": 3,
+        "Comment": "Be kind."
       }
     },
     tenants:[],
@@ -129,13 +128,19 @@ var ce = new Vue({
 
     },
   	//Push the rating to the chain based on rating_data
-    push_rating(tenant_id,landlord_id,property_id) {
+    push_rating(tenant_id) {
     	var rating_data = JSON.parse(JSON.stringify(ce.rating_data));
-    	rating_data.LandlordID = landlord_id;
-    	rating_data.PropertyID = property_id;
+    	rating_data.Type = "Landlord Review";
+    	rating_data.LandlordID = LandlordID;
+    	rating_data.PropertyID = PropertyID;
+
       //rating_data.review.value = ce.rating;
       let payload = {
-        "external_ids": [Base64.encode('credential_type:rating:test')],
+        "external_ids": [
+            Base64.encode('LandlordReview'),
+            Base64.encode('Sig:'+ce.makeid()),
+            Base64.encode('Credential-Test')
+        ],
         "content": Base64.encode(JSON.stringify(rating_data)),
       };
       api_push_rating_on_chain({
@@ -197,7 +202,7 @@ var ce = new Vue({
         console.log("Error:", error);
       });
     },
-        //Get the entry by hash and transform the content.
+    //Get the entry by hash and transform the content.
     get_by_chain(chain_hesh, param, the_list) {
       let url = '/chains/' + chain_hesh + "/entries/first" ;
       //Check first if the chain is not deleted.
@@ -231,6 +236,21 @@ var ce = new Vue({
         console.log("Error:", error);
       });
 
+    },
+    isEven(value) {
+      if (value%2 == 0)
+        return true;
+      else
+        return false;
+    },
+    makeid() {
+      var text = "";
+      var possible = "abcdefghijklmnopqrstuvwxyz0123456789";
+
+      for (var i = 0; i < 127; i++)
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+      return text;
     }
   }
 

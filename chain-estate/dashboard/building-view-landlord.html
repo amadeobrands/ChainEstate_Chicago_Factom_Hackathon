@@ -345,7 +345,7 @@
 
 
                                                                             <v-rating
-                                                                                    v-model="rating_data.data.value"></v-rating>
+                                                                                    v-model="rating_data.Data.Rating"></v-rating>
                                                                         </div>
                                                                         <div class="modal-body">
                                                                             <div class="row">
@@ -356,7 +356,7 @@
                                                                                         <textarea class="form-control"
                                                                                                   id="field-7"
                                                                                                   placeholder="Leave a comment"
-                                                                                                  v-model="rating_data.data.comment"></textarea>
+                                                                                                  v-model="rating_data.Data.Comment"></textarea>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -372,7 +372,7 @@
                                                                         <button type="button"
                                                                                 class="btn btn-primary waves-effect waves-light"
                                                                                 data-dismiss="modal"
-                                                                                @click="push_rating(tenants[idx].chain_id,'landlord_id','property_id')">
+                                                                                @click="push_rating(tenants[idx].chain_id)">
                                                                             Submit review
                                                                         </button>
                                                                     </div>
@@ -408,11 +408,12 @@
                                                                                 <div class="timeline">
                                                                                     <article
                                                                                             v-for="(rating,idx) in rating_list"
-                                                                                            class="timeline-item alt">
+                                                                                            :class="isEven(idx) ? ['timeline-item', 'alt'] : ['timeline-item']">
                                                                                         <div class="timeline-desk">
                                                                                             <div class="panel">
                                                                                                 <div class="panel-body">
-                                                                                                    <span class="arrow-alt"></span>
+                                                                                                    <span v-if="isEven(idx)" class="arrow-alt"></span>
+                                                                                                    <span v-if="!isEven(idx)" class="arrow"></span>
                                                                                                     <span class="timeline-icon"></span>
                                                                                                     <div class="row">
                                                                                                         <a target="_blank" :href="'https://explorer-hackathon.factom.com/chains/'+rating.chain_id+'/entries/'+rating.hash_id"><h4>{{rating.Type}}</h4></a>
@@ -439,33 +440,6 @@
                                                                                                             {{rating.created_at}}
                                                                                                         </small>
                                                                                                     </p>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </article>
-                                                                                    <article class="timeline-item ">
-                                                                                        <div class="timeline-desk">
-                                                                                            <div class="panel">
-                                                                                                <div class="panel-body">
-                                                                                                    <span class="arrow"></span>
-                                                                                                    <span class="timeline-icon"></span>
-                                                                                                    <p class="timeline-date text-muted">
-                                                                                                        <small>08:25
-                                                                                                            am
-                                                                                                        </small>
-                                                                                                    </p>
-                                                                                                    <p>consectetur
-                                                                                                        adipisicing
-                                                                                                        elit. Iusto,
-                                                                                                        optio, dolorum
-                                                                                                        <a href="#">John
-                                                                                                            deon</a>
-                                                                                                        provident rerum
-                                                                                                        aut hic quasi
-                                                                                                        placeat iure
-                                                                                                        tempora
-                                                                                                        laudantium </p>
-
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
