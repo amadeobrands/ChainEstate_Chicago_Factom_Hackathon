@@ -565,6 +565,7 @@
                  <div class="row">Leased by: {{(value[index1]['status']!=1) ? "N/A" : (value[index1]['leasee'] == account_address) ? "Me" : value[index1]['leasee']}}</div>
                 <br/>
                 <div><a target="_blank" :href="'https://rinkeby.etherscan.io/token/'+space_address+'?a='+ value[index1]['id']">View CEST on EtherScan</a></div>
+                <div><a target="_blank" :href="'https://explorer-hackathon.factom.com/chains/d625a573aa5e50ba8a46a6fd0ca5db0a55d3a1a3cc325b836b3a7a546e277410/entries/'+value[index1]['factom']">View SpaceInfo on Factom Explorer</a></div>
           </div>
         </div>
       </div>
@@ -799,7 +800,6 @@
         <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/js-base64@2.4.9/base64.min.js"></script>
 
-        <script src="../js/vue_magic.js"></script>
         <script src="../bundle.js" type="text/javascript"></script>
 
     </body>

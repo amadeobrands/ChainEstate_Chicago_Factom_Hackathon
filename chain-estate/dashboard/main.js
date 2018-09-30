@@ -306,6 +306,7 @@ window.ChainEstateApp = {
 
 ChainEstateApp.InitPage();
 
+import "./vue_magic";
 
 
 /*
