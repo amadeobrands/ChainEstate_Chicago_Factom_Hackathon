@@ -277,7 +277,7 @@
                             </div> <!-- end col -->
 
 
-                            <div class="col-lg-8 col-xl-9" id="vue_buildings_list">
+                            <div class="col-lg-8 col-xl-9" id="landlord_view">
                                 <div class="">
                                     <div class="card-box">
                                         <ul class="nav nav-tabs tabs-bordered">
@@ -288,7 +288,7 @@
                                             </li>
                                              <li class="nav-item">
                                                 <a href="#settings" data-toggle="tab" aria-expanded="true" class="nav-link">
-                                                    Leaser overview
+                                                    Tenant overview
                                                 </a>
                                             </li>
                                             <li class="nav-item">
@@ -306,6 +306,7 @@
 
                                             <div class="tab-pane" id="settings">
                                         <div class="row" id="ce">
+
                                             <div v-for="(value,idx) in tenants" class="col-lg-6 col-md-6">
                                                 <div class="text-center card-box">
                                                     <div class="member-card">
@@ -322,10 +323,10 @@
                                                         <!-- Center modal -->
                                                         <button type="button"
                                                                 class="btn btn-primary waves-effect waves-light"
-                                                                data-toggle="modal" data-target="#CenterModal">Rate
+                                                                data-toggle="modal" :data-target="'#CenterModal'+idx">Rate
                                                             leaser <i class="fa fa-star"></i></button>
                                                         <!-- sample modal content -->
-                                                        <div id="CenterModal" class="modal fade" tabindex="-1"
+                                                        <div :id="'CenterModal'+idx" class="modal fade" tabindex="-1"
                                                              role="dialog" aria-labelledby="CenterModalLabel"
                                                              aria-hidden="true">
                                                             <div class="modal-dialog modal-dialog-centered">
@@ -564,6 +565,7 @@
                  <div class="row">Leased by: {{(value[index1]['status']!=1) ? "N/A" : (value[index1]['leasee'] == account_address) ? "Me" : value[index1]['leasee']}}</div>
                 <br/>
                 <div><a target="_blank" :href="'https://rinkeby.etherscan.io/token/'+space_address+'?a='+ value[index1]['id']">View CEST on EtherScan</a></div>
+                <div><a target="_blank" :href="'https://explorer-hackathon.factom.com/chains/d625a573aa5e50ba8a46a6fd0ca5db0a55d3a1a3cc325b836b3a7a546e277410/entries/'+value[index1]['factom']">View SpaceInfo on Factom Explorer</a></div>
           </div>
         </div>
       </div>
@@ -798,8 +800,8 @@
         <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/js-base64@2.4.9/base64.min.js"></script>
 
-        <script src="../js/vue_magic.js"></script>
         <script src="../bundle.js" type="text/javascript"></script>
+        <script src="vue_magic.js" type="text/javascript"></script>
 
     </body>
 </html>
