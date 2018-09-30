@@ -212,10 +212,10 @@ var ce = new Vue({
       api_chain_is_alive({
         url: '/chains/' + chain_hesh + '/entries/search'
       }).then(function(response) {
-        console.log("Is alive",response);
         if (response.data.count>0){
           return true
         }
+        console.log("Is alive",response);
         //If the chain is not deleted, get the data from it.
         get_entry_on_chain_by_hash({
           url: url
@@ -228,7 +228,9 @@ var ce = new Vue({
             content.chain_id = chain_hesh;
             //Pushing values to the communicated list
             the_list.push(content);
-            console.log("the_list",the_list);
+            //console.log("the_list",the_list);
+            console.log("tenants",ce.tenants);
+            console.log("landlords",ce.landlords);
           }
         }).catch(error => {
           console.log("Error:", error);
