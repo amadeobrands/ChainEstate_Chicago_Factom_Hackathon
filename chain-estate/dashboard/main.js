@@ -224,7 +224,7 @@ window.ChainEstateApp = {
 
         var acts_view = new Vue(
             {
-                el: '#vue_buildings_list',
+                el: '#profile',
                 data: {
                     asset_details : ad,
                     space_address : self.spaceAddress,
@@ -306,6 +306,8 @@ window.ChainEstateApp = {
 
 ChainEstateApp.InitPage();
 
+
+
 /*
 var acts_view = new Vue(
     {
@@ -338,3 +340,4 @@ var acts_view = new Vue(
         }
     });
 */
+
