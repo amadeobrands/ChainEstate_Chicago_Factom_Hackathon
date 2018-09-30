@@ -139,7 +139,7 @@ var ce = new Vue({
         "external_ids": [
             Base64.encode('LandlordReview'),
             Base64.encode('Sig:'+ce.makeid()),
-            Base64.encode('Credential-Test')
+            Base64.encode('Credential')
         ],
         "content": Base64.encode(JSON.stringify(rating_data)),
       };
