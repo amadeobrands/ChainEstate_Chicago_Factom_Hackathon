@@ -414,14 +414,25 @@
                                                                                                 <div class="panel-body">
                                                                                                     <span class="arrow-alt"></span>
                                                                                                     <span class="timeline-icon"></span>
-                                                                                                    <div v-if="rating.Type == 'Landlord Review'">
-                                                                                                        <v-rating
+                                                                                                    <div class="row">
+                                                                                                        <a target="_blank" :href="'https://explorer-hackathon.factom.com/chains/'+tenants[idx].chain_id+'/entries/'+rating.hash_id"><h4>{{rating.Type}}</h4></a>
+                                                                                                    </div>
+                                                                                                    <div class="row" v-if="rating.Type == 'Landlord Review'">
+
+                                                                                                        <div class="col">
+                                                                                                            <v-rating
                                                                                                                 v-model="rating.Data.Rating"></v-rating>
-                                                                                                        <p>
-                                                                                                            {{rating.Data.Comment}}</p>
+                                                                                                        </div>
+                                                                                                        <div class="col">
+                                                                                                            {{rating.Data.Comment}}
+                                                                                                        </div>
+
                                                                                                     </div>
                                                                                                     <div v-if="rating.Type != 'Landlord Review'">
-                                                                                                        
+                                                                                                        <div class="row" v-for="(rating_value,key) in rating.Data">
+                                                                                                            <div class="col">{{key}}</div>
+                                                                                                            <div class="col">{{rating_value}}</div>
+                                                                                                        </div>
                                                                                                     </div>
                                                                                                     <p class="timeline-date text-muted">
                                                                                                         <small>

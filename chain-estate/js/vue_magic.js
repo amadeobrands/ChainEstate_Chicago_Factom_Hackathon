@@ -28,7 +28,7 @@ var api_push_rating_on_chain = axios.create({
 
 // Getting the ratings on the chain of this tennant
 var get_ratings_on_chain = axios.create({
-  data:{"external_ids": [Base64.encode('LandlordReview')]},
+  data:{"external_ids": [Base64.encode('Credential')]},
   method: 'POST',
   url: '/chains/' + tennant_id + '/entries/search'
 });
@@ -71,7 +71,7 @@ var get_entry_on_chain_by_hash = axios.create({
 
 var entry_hash = ";";
 
-
+var PropertyID = "d625a573aa5e50ba8a46a6fd0ca5db0a55d3a1a3cc325b836b3a7a546e277410";
 
 var ce = new Vue({
   el: '#ce',
@@ -79,8 +79,8 @@ var ce = new Vue({
   	api_response:[],
     rating:3,
     rating_data: {
-      "property_id": "d625a573aa5e50ba8a46a6fd0ca5db0a55d3a1a3cc325b836b3a7a546e277410",
-      "landlord_id": 123,
+      "PropertyID": PropertyID,
+      "LandlordID": 123,
       "contract_stage": 123,
       "timestemp": 123,
       "data": {
@@ -131,8 +131,8 @@ var ce = new Vue({
   	//Push the rating to the chain based on rating_data
     push_rating(tenant_id,landlord_id,property_id) {
     	var rating_data = JSON.parse(JSON.stringify(ce.rating_data));
-    	rating_data.landlord_id = landlord_id;
-    	rating_data.property_id = property_id;
+    	rating_data.LandlordID = landlord_id;
+    	rating_data.PropertyID = property_id;
       //rating_data.review.value = ce.rating;
       let payload = {
         "external_ids": [Base64.encode('credential_type:rating:test')],
@@ -154,7 +154,6 @@ var ce = new Vue({
     get_rating(tenant_id) {
     	ce.rating_list = [];
       get_ratings_on_chain({
-
         url: '/chains/' + tenant_id + '/entries/search'
       }).then(function(response) {
         let data = response.data;
@@ -189,6 +188,7 @@ var ce = new Vue({
           let content = JSON.parse(Base64.decode(data.data.content));
           content.created_at = data.data.created_at;
           content.chain_id = data.data.chain.chain_id;
+          content.hash_id = data.data.entry_hash;
           console.log("content of entry:",content);
         	the_list.push(content);
         }
